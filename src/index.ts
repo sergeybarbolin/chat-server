@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
-import { UserController } from './controllers';
+import { UserController, DialogController } from './controllers';
 
 const mongooseConfig = { 
     useNewUrlParser: true,
@@ -17,10 +17,15 @@ const app = express();
 app.use(bodyParser.json())
 
 const User = new UserController();
+const Dialog = new DialogController();
 
-app.get('/user/:id', User.show);
-app.delete('/user/:id', User.delete);
-app.post('/user/create', User.create);
+app.get('/users/:id', User.show);
+app.post('/users/create', User.create);
+app.delete('/users/:id', User.delete);
+
+app.get('/dialogs/:id', Dialog.index);
+app.post('/dialogs/create', Dialog.create);
+app.delete('/dialogs/:id', Dialog.delete);
 
 app.listen(3030, () => {
     console.log('Example app listening on port 3030!');
