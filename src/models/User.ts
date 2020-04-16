@@ -1,6 +1,16 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 import isEmail from 'validator/lib/isEmail';
+
+export interface IUser extends Document {
+    email: string;
+    fullname: string;
+    password: string;
+    confirmed: boolean;
+    avatar: string;
+    confirm_hash: string;
+    last_seen: Date;
+}
 
 const UserModel = new Schema({
     email: {
@@ -27,6 +37,6 @@ const UserModel = new Schema({
 }, {
     timestamps: true
 });
-const User = mongoose.model('User', UserModel);
+const User = mongoose.model<IUser>('User', UserModel);
 
 export default User;
